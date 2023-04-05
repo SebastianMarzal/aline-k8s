@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: landing-service
+  namespace: aline
+  labels:
+    component: landing
+spec:
+  type: LoadBalancer
+  selector:
+    component: landing
+  ports:
+  - name: landing
+    protocol: TCP
+    port: 4200
+    targetPort: 80

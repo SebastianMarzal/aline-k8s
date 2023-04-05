@@ -1,0 +1,7 @@
+DB_USERNAME=admin
+DB_PASSWORD=really_good_password
+DB_PORT=3306
+DB_NAME=sm_alinedb
+ENCRYPT_SECRET_KEY=
+JWT_SECRET_KEY=
+DB_HOST=

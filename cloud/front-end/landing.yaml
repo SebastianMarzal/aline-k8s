@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: landing-microservice
+  namespace: aline
+  labels:
+    component: landing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: landing
+  template:
+    metadata:
+      labels:
+        component: landing
+    spec:
+      containers:
+      - name: landing
+        image: ${REPOSITORY}-landing
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 80
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "100m"

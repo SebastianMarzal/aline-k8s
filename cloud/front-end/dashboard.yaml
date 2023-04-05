@@ -1,0 +1,28 @@
+apiVersion: apps/v1bank
+kind: Deployment
+metadata:
+  name: dashboard-microservice
+  namespace: aline
+  labels:
+    component: dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: dashboard
+  template:
+    metadata:
+      labels:
+        component: dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: ${REPOSITORY}-dashboard
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 80
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "100m"

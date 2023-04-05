@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: card-service-deployment
+  namespace: aline
+  labels:
+    component: deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: deployment
+  template:
+    metadata:
+      labels:
+        component: deployment
+    spec:
+      containers:
+      - name: card
+        image: sebastianom/card
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8084
+        env:
+        - name: APP_PORT
+          value: "8084"
+        - name: DB_USERNAME
+          value: user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: DB_PASSWORD
+        - name: DB_HOST
+          value: mysql
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_NAME
+          value: alinedb
+        - name: ENCRYPT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: encrypt-key
+              key: ENCRYPT_SECRET_KEY
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: jwt-key
+              key: JWT_SECRET_KEY
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "500m"

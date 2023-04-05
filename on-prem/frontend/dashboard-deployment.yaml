@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dashboard-deployment
+  namespace: aline
+  labels:
+    component: dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: dashboard
+  template:
+    metadata:
+      labels:
+        component: dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: sebastianom/dashboard
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80

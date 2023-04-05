@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-microservice
+  namespace: aline
+  labels:
+    component: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: admin
+  template:
+    metadata:
+      labels:
+        component: admin
+    spec:
+      containers:
+      - name: admin
+        image: ${REPOSITORY}-admin
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 80
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "100m"

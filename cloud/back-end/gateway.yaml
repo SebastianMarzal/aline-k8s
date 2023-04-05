@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-microservice-${LABEL_VERSION}
+  namespace: aline
+  labels:
+    component: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: gateway
+      version: ${LABEL_VERSION}
+  template:
+    metadata:
+      labels:
+        component: gateway
+        version: ${LABEL_VERSION}
+    spec:
+      containers:
+      - name: gateway
+        image: ${REPOSITORY}-gateway:${LABEL_VERSION}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: APP_PORT
+          value: "80"
+        - name: APP_SERVICE_HOST
+          value: back-end-service
+        - name: PORTAL_LANDING
+          value: landing-service
+        - name: PORTAL_DASHBOARD
+          value: dashboard-service
+        - name: PORTAL_ADMIN
+          value: admin-service
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "100m"

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-deployment
+  namespace: aline
+  labels:
+    component: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: admin
+  template:
+    metadata:
+      labels:
+        component: admin
+    spec:
+      containers:
+      - name: admin
+        image: sebastianom/admin
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000

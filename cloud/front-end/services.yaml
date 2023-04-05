@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service
+  namespace: aline
+  labels:
+    component: admin
+spec:
+  type: LoadBalancer
+  selector:
+    component: admin
+  ports:
+  - name: admin
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dashboard-service
+  namespace: aline
+  labels:
+    component: dashboard
+spec:
+  type: LoadBalancer
+  selector:
+    component: dashboard
+  ports:
+  - name: dashboard
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: landing-service
+  namespace: aline
+  labels:
+    component: landing
+spec:
+  type: LoadBalancer
+  selector:
+    component: landing
+  ports:
+  - name: landing
+    port: 80
+    targetPort: 80

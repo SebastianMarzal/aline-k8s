@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: landing-deployment
+  namespace: aline
+  labels:
+    component: landing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: landing
+  template:
+    metadata:
+      labels:
+        component: landing
+    spec:
+      containers:
+      - name: landing
+        image: sebastianom/landing
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80

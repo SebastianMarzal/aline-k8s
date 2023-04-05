@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-microservice-${LABEL_VERSION}
+  namespace: aline
+  labels:
+    component: deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: deployment
+      version: ${LABEL_VERSION}
+  template:
+    metadata:
+      labels:
+        component: deployment
+        version: ${LABEL_VERSION}
+    spec:
+      containers:
+      - name: bank
+        image: ${REPOSITORY}-bank:${LABEL_VERSION}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8083
+        env:
+        - name: APP_PORT
+          value: "8083"
+        envFrom:
+        - configMapRef:
+            name: backend-configmap
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "100m"
